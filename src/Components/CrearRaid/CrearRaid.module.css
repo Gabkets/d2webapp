@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css?family=Saira+Semi+Condensed&display=swap');
+
+.tiles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    font-family: 'Saira Semi Condensed', sans-serif;
+}
+
+.tile {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-bottom: 3px solid #080c10;
+    max-width: 350px; 
+    margin-bottom: 30px;
+}
+
+.thumbnail {
+    display: block;
+    width: 100%;
+    max-width: 350px; 
+    cursor: pointer;
+    transform: scale(1);
+    transition: .3s transform;
+    opacity: 0.6;
+}
+
+.tile.checked {
+    border-color: #f39c12;
+}
+
+.checked .thumbnail{
+    opacity: 1;
+}
+
+.checked .tiletitle {
+    color: #f39c12;
+}
+
+.tile:hover .thumbnail {
+    transform: scale(1.5);
+    opacity: 1;
+}
+
+.tiletitle {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.4rem;
+    width: 100%;
+    text-align: center;
+    text-shadow: 2px 2px #333333;
+}
+
+.tiletitle small{
+    font-size: 0.7rem;
+}
+
+.formbox {
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.input {
+    background: transparent;
+    color: white;
+    padding: 10px;
+    border: 0;
+    border-bottom: 2px solid;
+    min-height: 30px;
+    font-family: 'Saira Semi Condensed', sans-serif;
+}
+
+textarea.input {
+    width: 100%;
+}
+
+.inlineinputs input{
+    width: 50%;
+    box-sizing: border-box;
+    min-height: 50px;
+}
+
+.button {
+    padding: 10px 20px;
+    background: #f39c12;
+    color: #080c10;
+    font-family: 'Saira Semi Condensed', sans-serif;
+    border: 0;
+    min-width: 150px;
+    margin: 0 auto;
+    cursor: pointer;
+    margin-bottom: 40px;
+}
+
+.cabezal {
+    text-align: center;
+    font-family: 'Saira Semi Condensed', sans-serif;
+}
+
+
+.message {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.success {
+    background: #1abc9c;
+    color: white;
+}

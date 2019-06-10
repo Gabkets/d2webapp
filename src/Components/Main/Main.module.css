@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Condiment|Frijole|Uncial+Antiqua&display=swap');
+
+.main {
+    min-height: 100vh;
+    color: white;
+}
+
+/*
+font-family: 'Uncial Antiqua', cursive;
+font-family: 'Frijole', cursive;
+font-family: 'Condiment', cursive;
+*/
+
+.title {
+    font-family: 'Uncial Antiqua', cursive;
+    text-align: center;
+    padding: 20px;
+}
