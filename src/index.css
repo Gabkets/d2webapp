@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: url('https://res.cloudinary.com/gabke/image/upload/v1560139401/destiny2/destiny_traveler_png_383743.png') 0 0 no-repeat #181c25;
   background-attachment: fixed;
+  background-size: cover; 
 }
 
 code {
