@@ -5,9 +5,6 @@ import RadioGroup from './RadioGroup';
 import { database } from '../../Services/FirebaseConfig';
 
 let formatDate = (date, localize) => {
-    if(localize){
-        debugger;
-    }
     var dd = String(date.getDate()).padStart(2, '0');
     var mm = String(date.getMonth() + 1).padStart(2, '0');
     var yyyy = date.getFullYear();
@@ -31,7 +28,9 @@ class FormCrearRaid extends Component {
             hora: '',
             descripcion: '',
             message: '',
-            messageType: ''
+            messageType: '',
+            oauthLink: '',
+            clanInfo: {}
         };
     }
 
