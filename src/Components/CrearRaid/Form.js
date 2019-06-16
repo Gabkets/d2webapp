@@ -82,7 +82,7 @@ class FormCrearRaid extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        if(this.state.selectedOption && false){
+        if(this.state.selectedOption){
             CreateRaid(this.state.raid, this.state.datetime, this.state.descripcion).then((res) => {
                 if(res === null) {
                     this.setState({
