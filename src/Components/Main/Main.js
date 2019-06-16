@@ -20,12 +20,12 @@ class Main extends Component {
       })
     });*/
 
-    traveler.getClanMember().then((res) => {
+    /*traveler.getClanMember().then((res) => {
       debugger;
       this.setState({
           clanMember: JSON.parse(res).Response.detail
       })
-    });
+    });*/
 
   };
 

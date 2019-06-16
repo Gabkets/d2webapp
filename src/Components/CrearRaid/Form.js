@@ -82,7 +82,9 @@ class FormCrearRaid extends Component {
             var uruguay = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Montevideo"});
             var chile = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Santiago"});
             var mexico = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Mexico_City"});
-            var time = uruguay + ':flag_uy:\n' + chile + ':flag_cl:\n' + mexico + ':flag_mx:\n';
+            var peru = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Lima"});
+            var guatemala = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Guatemala"});
+            var time = uruguay + ':flag_uy:\n' + chile + ':flag_cl:\n' + peru + ':flag_pe:\n' + guatemala + ':flag_gt:\n' + mexico + ':flag_mx:\n';
     
             database.ref('Raids/Agenda/' + Math.floor(Date.now() / 100)).set({
                 title: raid.title,
