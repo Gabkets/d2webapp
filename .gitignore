@@ -19,6 +19,7 @@
 .env.production.local
 
 node_modules_v10
+_broken_node
 
 npm-debug.log*
 yarn-debug.log*

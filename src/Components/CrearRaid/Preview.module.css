@@ -1,0 +1,24 @@
+.preview {
+    background-color: #26262b;
+    border-left: 2px solid #f39c12;
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 5px 10px;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    padding: 0;
+    margin: 0;
+}
+
+.title {
+    padding: 0;
+    margin: 0 0 5px;
+}
+
+.preview p {
+    margin: 0 0 10px;
+    white-space: pre-line;
+    color: #777777;
+}

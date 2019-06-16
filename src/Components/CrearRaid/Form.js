@@ -1,23 +1,10 @@
 import React, { Component } from 'react';
-import { Raids } from '../../Services/GameInfo';
+import { Raids, Timezones } from '../../Services/GameInfo';
 import styles from './CrearRaid.module.css';
 import RadioGroup from './RadioGroup';
-import { database } from '../../Services/FirebaseConfig';
-
-let formatDate = (date, localize) => {
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0');
-    var yyyy = date.getFullYear();
-    var min = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
-    var hs = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
-
-    return {
-        completo: dd + '/' + mm + '/' + yyyy + ' ' + min + ':' + hs,
-        tiempo: hs + ':' + min,
-        fecha: dd + '/' + mm + '/' + yyyy,
-        fechaRaw: yyyy + '-' + mm + '-' + dd
-    } 
-}
+import { reorderDate, formatDate, discorDateField } from '../../Utils/Utils';
+import CreateRaid from '../../Services/CreateRaid';
+import Preview from './Preview';
 
 class FormCrearRaid extends Component {
     constructor(props){
@@ -26,39 +13,63 @@ class FormCrearRaid extends Component {
             selectedOption: '',
             fecha: '',
             hora: '',
-            descripcion: '',
+            descripcion: 'No hay descripción aun',
             message: '',
             messageType: '',
-            oauthLink: '',
-            clanInfo: {}
+            raid: {
+                title: 'No seleccionada',
+                luz: '000'
+            },
+            parsedDate: 'No seleccionada'
         };
     }
 
     componentWillMount() {
         var fecha = new Date();
         let today = formatDate(fecha, '');
+        const locale = Timezones(today.fechaRaw + ' ' + today.tiempo);
+        const reorderedDates = reorderDate(locale);
+        const datetime = discorDateField(reorderedDates);
         
         this.setState({
             fecha: today.fechaRaw,
-            hora: today.tiempo
-        })
-    }
-
-    handleOptionChange = (changeEvent) => {
-        this.setState({
-            selectedOption: changeEvent.target.value
+            hora: today.tiempo,
+            parsedDate: datetime
         });
     }
 
-    handleChangeFecha = (changeFecha) => {
+    handleOptionChange = (changeEvent) => {
+        const raid = Raids.find((raid)=>{
+            return raid.id === changeEvent.target.value
+        })
+
         this.setState({
-            fecha: changeFecha.target.value
+            selectedOption: changeEvent.target.value,
+            raid: raid
+        });        
+    }
+
+    handleChangeFecha = (changeFecha) => {
+        const locale = Timezones(changeFecha.target.value + ' ' + this.state.hora);
+        const reorderedDates = reorderDate(locale);
+        const datetime = discorDateField(reorderedDates);
+        
+        this.setState({
+            fecha: changeFecha.target.value,
+            parsedDate: datetime
         });
     }
 
     handleChangeHora = (changeHora) => {
+        let fixedDate = this.state.fecha.split('-');
+        fixedDate = fixedDate[2] + '/' + fixedDate[1] + '/' + fixedDate[0];
+        const locale = Timezones(this.state.fecha + ' ' + changeHora.target.value);
+        const reorderedDates = reorderDate(locale);
+        const datetime = discorDateField(reorderedDates);
+
         this.setState({
-            hora: changeHora.target.value
+            hora: changeHora.target.value,
+            parsedDate: datetime
         });
     }
 
@@ -71,45 +82,23 @@ class FormCrearRaid extends Component {
     handleSubmit = (event) => {
         event.preventDefault();
 
-        if(this.state.selectedOption){
-            const raid = Raids.find((raid)=>{
-                return raid.id === this.state.selectedOption
-            })
-    
-            let fixedDate = this.state.fecha.split('-');
-            fixedDate = fixedDate[2] + '/' + fixedDate[1] + '/' + fixedDate[0];      
-            
-            var uruguay = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Montevideo"});
-            var chile = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Santiago"});
-            var mexico = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Mexico_City"});
-            var peru = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Lima"});
-            var guatemala = new Date(this.state.fecha + ' '+ this.state.hora).toLocaleString("en-US", {timeZone: "America/Guatemala"});
-            var time = uruguay + ':flag_uy:\n' + chile + ':flag_cl:\n' + peru + ':flag_pe:\n' + guatemala + ':flag_gt:\n' + mexico + ':flag_mx:\n';
-    
-            database.ref('Raids/Agenda/' + Math.floor(Date.now() / 100)).set({
-                title: raid.title,
-                fecha: fixedDate,
-                hora: time,
-                imagen: raid.imagen,
-                luz: raid.luzRecomendada,
-                descripcion: this.state.descripcion
-            }, (error) => {
-                if(error) {
-                    
-                } else {
+        if(this.state.selectedOption && false){
+            CreateRaid(this.state.raid, this.state.datetime, this.state.descripcion).then((res) => {
+                if(res === null) {
                     this.setState({
                         message: 'Estamos comunicandonos con tu robot, en breve tu evento estará publicado en Discord.',
                         messageType: 'success'
                     });
-    
+        
                     setTimeout(()=>{
                         this.setState({
                             message: '',
                             messageType: ''
                         });
                     }, 10000)
-                }
+                }               
             });
+
         }
     }
 
@@ -123,41 +112,45 @@ class FormCrearRaid extends Component {
             messagetype = `${styles.message} ${styles.error}`
         } 
 
-        return (            
-            <form onSubmit={this.handleSubmit}>
-                <div className={messagetype}>{this.state.message}</div>
-                <h2 className={styles.cabezal}>Administrado de Equipos de Raid</h2>
-                <h3 className={styles.cabezal}>Seleccione una Incurción</h3>
-                <article className={styles.tiles}>                    
-                    {Raids.map((raid) => {
-                        return (
-                            <RadioGroup key={raid.id} handleChange={this.handleOptionChange} raid={raid} selected={this.state.selectedOption}/>                  
-                        )
-                    })}
-                </article>
+        return (
+            <section>
+                <form onSubmit={this.handleSubmit}>
+                    <div className={messagetype}>{this.state.message}</div>
+                    <h2 className={styles.cabezal}>Administrado de Equipos de Raid</h2>
+                    <h3 className={styles.cabezal}>Seleccione una Incurción</h3>
+                    <article className={styles.tiles}>                    
+                        {Raids.map((raid) => {
+                            return (
+                                <RadioGroup key={raid.id} handleChange={this.handleOptionChange} raid={raid} selected={this.state.selectedOption}/>                  
+                            )
+                        })}
+                    </article>
 
-                <article className={styles.formbox}>
-                    <label for="meeting-time">Fecha y hora:</label>
-                    <div className={styles.inlineinputs}>
-                        <input type="date" id="fecha" className={styles.input} onChange={this.handleChangeFecha} value={this.state.fecha}/>
-                        <input type="time" id="hora" className={styles.input}  onChange={this.handleChangeHora} placeholder="Agrega una hora. Ejemplo: 10pm" value={this.state.hora}/>
-                    </div>                    
-                </article>
+                    <article className={styles.formbox}>
+                        <label for="meeting-time">Fecha y hora:</label>
+                        <div className={styles.inlineinputs}>
+                            <input type="date" id="fecha" className={styles.input} onChange={this.handleChangeFecha} value={this.state.fecha}/>
+                            <input type="time" id="hora" className={styles.input}  onChange={this.handleChangeHora} placeholder="Agrega una hora. Ejemplo: 10pm" value={this.state.hora}/>
+                        </div>                    
+                    </article>
 
-                <article className={styles.formbox}>
-                    <label for="descripcion">Descripcion</label>
-                    <div>
-                        <textarea className={styles.input} onChange={this.handleChangeDesc} name="descripcion" id="descripcion" placeholder="Agrega una descripcion"/>
-                    </div>                    
-                </article>
+                    <article className={styles.formbox}>
+                        <label for="descripcion">Descripcion</label>
+                        <div>
+                            <textarea className={styles.input} onChange={this.handleChangeDesc} name="descripcion" id="descripcion" placeholder="Agrega una descripcion"/>
+                        </div>                    
+                    </article>
 
-                
-                <article className={styles.formbox}>
-                    <div>
-                        <button className={styles.button}>Crear evento</button>
-                    </div>                    
-                </article>
-            </form>
+                    <Preview title={this.state.raid.title} luz={this.state.raid.luz} descripcion={this.state.descripcion} datetime={this.state.parsedDate} imagen={this.state.raid.imagen}/>
+                    
+                    <article className={styles.formbox}>
+                        <div>
+                            <button className={styles.button}>Crear evento</button>
+                        </div>                    
+                    </article>
+                </form>
+               
+            </section>
         );
     }
 }

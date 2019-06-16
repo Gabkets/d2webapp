@@ -43,4 +43,34 @@ const Raids = [
     },
 ]
 
-export { Raids };
+const Timezones = (datetime) => {
+    return [
+        { 
+            country: 'uruguay',
+            datetime: new Date(datetime).toLocaleString("en-US", {timeZone: "America/Montevideo"}),
+            flag: ':flag_uy:'
+        },
+        { 
+            country: 'chile',
+            datetime: new Date(datetime).toLocaleString("en-US", {timeZone: "America/Santiago"}),
+            flag: ':flag_cl:'
+        },
+        { 
+            country: 'mexico',
+            datetime: new Date(datetime).toLocaleString("en-US", {timeZone: "America/Mexico_City"}),
+            flag: ':flag_mx:'
+        },
+        { 
+            country: 'peru',
+            datetime: new Date(datetime).toLocaleString("en-US", {timeZone: "America/Lima"}),
+            flag: ':flag_pe:'
+        },
+        { 
+            country: 'guatemala',
+            datetime: new Date(datetime).toLocaleString("en-US", {timeZone: "America/Guatemala"}),
+            flag: ':flag_gt:'
+        }
+    ];
+};
+
+export { Raids, Timezones };
