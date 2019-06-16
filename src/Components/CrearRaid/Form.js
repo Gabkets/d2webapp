@@ -83,7 +83,7 @@ class FormCrearRaid extends Component {
         event.preventDefault();
 
         if(this.state.selectedOption){
-            CreateRaid(this.state.raid, this.state.datetime, this.state.descripcion).then((res) => {
+            CreateRaid(this.state.raid, this.state.parsedDate, this.state.descripcion).then((res) => {
                 if(res === null) {
                     this.setState({
                         message: 'Estamos comunicandonos con tu robot, en breve tu evento estará publicado en Discord.',
