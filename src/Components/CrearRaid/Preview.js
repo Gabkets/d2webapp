@@ -9,7 +9,7 @@ class Preview extends Component {
     render() {
         return (
             <article className={styles.preview}>
-                <h1 className={styles.title}>{this.props.title}</h1>
+                <h1 className={styles.title}>{this.props.raid.title} {this.props.tipo} </h1>
                 <p>{this.props.descripcion}</p>
                 <section>
                     <h2 className={styles.subtitle}>Fecha</h2>

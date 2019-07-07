@@ -4,6 +4,7 @@ const Raids = [
         title: 'Leviatan',
         luzRecomendada: '300',
         guia: '',
+        hasPrestige: true,
         imagen: 'https://res.cloudinary.com/gabke/image/upload/c_scale,w_500/v1560017762/destiny2/leviatan.jpg'
     },
     {
@@ -11,6 +12,7 @@ const Raids = [
         title: 'Devorador de Mundos',
         luzRecomendada: '300',
         guia: '',
+        hasPrestige: true,
         imagen: 'https://res.cloudinary.com/gabke/image/upload/c_thumb,h_281,w_500/v1560113400/destiny2/eater.jpg'
     },
     {
@@ -18,6 +20,7 @@ const Raids = [
         title: 'Espira de las Estrellas',
         luzRecomendada: '370',
         guia: '',
+        hasPrestige: true,
         imagen: 'https://res.cloudinary.com/gabke/image/upload/c_thumb,h_281,w_500/v1560113399/destiny2/spire.jpg'
     },
     {

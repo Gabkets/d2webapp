@@ -2,9 +2,9 @@
 
 .tiles {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    align-items: center;
     font-family: 'Saira Semi Condensed', sans-serif;
 }
 
@@ -14,13 +14,15 @@
     overflow: hidden;
     border-bottom: 3px solid #080c10;
     max-width: 350px; 
-    margin-bottom: 30px;
+    height: 80px;
+    background: #080c10;
+    transition: .3s height;
 }
 
 .thumbnail {
     display: block;
     width: 100%;
-    max-width: 350px; 
+    width: 350px; 
     cursor: pointer;
     transform: scale(1);
     transition: .3s transform;
@@ -29,10 +31,8 @@
 
 .tile.checked {
     border-color: #f39c12;
-}
-
-.checked .thumbnail{
-    opacity: 1;
+    background: #f39c12;
+    height: 180px;
 }
 
 .checked .tiletitle {
@@ -114,4 +114,13 @@ textarea.input {
 .success {
     background: #1abc9c;
     color: white;
+}
+
+
+.presgigeOptions{    
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
 }

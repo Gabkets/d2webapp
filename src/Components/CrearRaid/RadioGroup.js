@@ -5,6 +5,7 @@ class RadioGroup extends Component {
     render() {
         const raid = this.props.raid;
         const selected = raid.id === this.props.selected;
+
         if(selected){
             return(
                 <div className={`${styles.tile} ${styles.checked}`}>
@@ -15,10 +16,18 @@ class RadioGroup extends Component {
                         <img className={styles.thumbnail} src={raid.imagen} />
                         <div className={styles.tiletitle}>
                             {raid.title}                        
-                            <div>
-                                <small>Luz recomendada: {raid.luzRecomendada}</small>
-                            </div> 
                         </div>
+                        {raid.hasPrestige ?
+                            <div onClick={this.props.selectPrestige} className={styles.presgigeOptions}>
+                                <span id="prestigio">
+                                    prestigio
+                                </span>
+                                <span id="normal">
+                                    normal
+                                </span>
+                            </div> : 
+                            <span></span>
+                        }   
                     </label>
                 </div>  
             )
@@ -31,11 +40,8 @@ class RadioGroup extends Component {
                             onChange={this.props.handleChange} /> 
                         <img className={styles.thumbnail} src={raid.imagen} />
                         <div className={styles.tiletitle}>
-                            {raid.title}                        
-                            <div>
-                                <small>Luz recomendada: {raid.luzRecomendada}</small>
-                            </div> 
-                        </div>                    
+                            {raid.title}
+                        </div>    
                     </label>
                 </div>       
             );

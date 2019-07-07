@@ -20,6 +20,7 @@ class FormCrearRaid extends Component {
                 title: 'No seleccionada',
                 luz: '000'
             },
+            tipo: "",
             parsedDate: 'No seleccionada'
         };
     }
@@ -83,7 +84,7 @@ class FormCrearRaid extends Component {
         event.preventDefault();
 
         if(this.state.selectedOption){
-            CreateRaid(this.state.raid, this.state.parsedDate, this.state.descripcion).then((res) => {
+            CreateRaid(this.state.raid, this.state.parsedDate, this.state.descripcion, this.state.tipo).then((res) => {
                 if(res === null) {
                     this.setState({
                         message: 'Estamos comunicandonos con tu robot, en breve tu evento estará publicado en Discord.',
@@ -100,6 +101,12 @@ class FormCrearRaid extends Component {
             });
 
         }
+    }
+
+    selectPrestige = (event) => {
+        this.setState({
+            tipo: event.target.id
+        })        
     }
 
 
@@ -121,7 +128,7 @@ class FormCrearRaid extends Component {
                     <article className={styles.tiles}>                    
                         {Raids.map((raid) => {
                             return (
-                                <RadioGroup key={raid.id} handleChange={this.handleOptionChange} raid={raid} selected={this.state.selectedOption}/>                  
+                                <RadioGroup key={raid.id} selectPrestige={this.selectPrestige} handleChange={this.handleOptionChange} raid={raid} selected={this.state.selectedOption}/>                  
                             )
                         })}
                     </article>
@@ -135,13 +142,15 @@ class FormCrearRaid extends Component {
                     </article>
 
                     <article className={styles.formbox}>
-                        <label for="descripcion">Descripcion</label>
+                        <label for="descripcion">
+                            Descripcion
+                        </label>
                         <div>
                             <textarea className={styles.input} onChange={this.handleChangeDesc} name="descripcion" id="descripcion" placeholder="Agrega una descripcion"/>
                         </div>                    
                     </article>
 
-                    <Preview title={this.state.raid.title} luz={this.state.raid.luz} descripcion={this.state.descripcion} datetime={this.state.parsedDate} imagen={this.state.raid.imagen}/>
+                    <Preview raid={this.state.raid} tipo={this.state.tipo} descripcion={this.state.descripcion} datetime={this.state.parsedDate} imagen={this.state.raid.imagen}/>
                     
                     <article className={styles.formbox}>
                         <div>
