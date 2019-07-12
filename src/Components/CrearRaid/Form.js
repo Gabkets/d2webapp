@@ -21,7 +21,8 @@ class FormCrearRaid extends Component {
                 luz: '000'
             },
             tipo: "",
-            parsedDate: 'No seleccionada'
+            parsedDate: 'No seleccionada',
+            disabled: false
         };
     }
 
@@ -46,7 +47,8 @@ class FormCrearRaid extends Component {
 
         this.setState({
             selectedOption: changeEvent.target.value,
-            raid: raid
+            raid: raid,
+            tipo: ""
         });        
     }
 
@@ -84,13 +86,21 @@ class FormCrearRaid extends Component {
         event.preventDefault();
 
         if(this.state.selectedOption){
+            this.setState({
+                disabled: true
+            });
+            setTimeout(()=>{
+                this.setState({
+                    disabled: false
+                });
+            }, 10000)
             CreateRaid(this.state.raid, this.state.parsedDate, this.state.descripcion, this.state.tipo).then((res) => {
                 if(res === null) {
                     this.setState({
                         message: 'Estamos comunicandonos con tu robot, en breve tu evento estará publicado en Discord.',
                         messageType: 'success'
                     });
-        
+
                     setTimeout(()=>{
                         this.setState({
                             message: '',
@@ -128,7 +138,7 @@ class FormCrearRaid extends Component {
                     <article className={styles.tiles}>                    
                         {Raids.map((raid) => {
                             return (
-                                <RadioGroup key={raid.id} selectPrestige={this.selectPrestige} handleChange={this.handleOptionChange} raid={raid} selected={this.state.selectedOption}/>                  
+                                <RadioGroup key={raid.id} selectPrestige={this.selectPrestige} handleChange={this.handleOptionChange} tipo={this.state.tipo} raid={raid} selected={this.state.selectedOption}/>                  
                             )
                         })}
                     </article>
@@ -154,7 +164,7 @@ class FormCrearRaid extends Component {
                     
                     <article className={styles.formbox}>
                         <div>
-                            <button className={styles.button}>Crear evento</button>
+                            {this.state.disabled ? <button className={styles.button} disabled="true">Crear evento</button> : <button className={styles.button}>Crear evento</button>}
                         </div>                    
                     </article>
                 </form>

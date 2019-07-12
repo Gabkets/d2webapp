@@ -5,7 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: url('https://res.cloudinary.com/gabke/image/upload/v1560139401/destiny2/destiny_traveler_png_383743.png') 0 0 no-repeat #181c25;
+  background-color: #333333;
+  background: url('https://res.cloudinary.com/gabke/image/upload/v1562643316/destiny2/destiny2_radial_detail.jpg') 0 0 no-repeat #181c25;
   background-attachment: fixed;
   background-size: cover; 
 }

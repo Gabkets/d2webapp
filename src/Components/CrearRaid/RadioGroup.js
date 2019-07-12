@@ -19,10 +19,10 @@ class RadioGroup extends Component {
                         </div>
                         {raid.hasPrestige ?
                             <div onClick={this.props.selectPrestige} className={styles.presgigeOptions}>
-                                <span id="prestigio">
+                                <span id="prestigio" className={this.props.tipo === "prestigio" ? styles.tipoSelected: ""}>
                                     prestigio
                                 </span>
-                                <span id="normal">
+                                <span id="normal" className={this.props.tipo === "normal" ? styles.tipoSelected: ""}>
                                     normal
                                 </span>
                             </div> : 

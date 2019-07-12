@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Saira+Semi+Condensed&display=swap');
 
+:root {
+    --hightone-color: #f39c12;
+    --text-shadow: 2px 2px #000000;
+}
+
 .tiles {
     display: flex;
     flex-direction: column;
@@ -30,18 +35,21 @@
 }
 
 .tile.checked {
-    border-color: #f39c12;
-    background: #f39c12;
+    border-color: var(--hightone-color);
     height: 180px;
 }
 
 .checked .tiletitle {
-    color: #f39c12;
+    color: var(--hightone-color);
+}
+
+.checked .thumbnail {
+    opacity: 0.2;
 }
 
 .tile:hover .thumbnail {
     transform: scale(1.5);
-    opacity: 1;
+    opacity: 0.2;
 }
 
 .tiletitle {
@@ -53,7 +61,7 @@
     font-size: 1.4rem;
     width: 100%;
     text-align: center;
-    text-shadow: 2px 2px #333333;
+    text-shadow: var(--text-shadow);
 }
 
 .tiletitle small{
@@ -62,7 +70,7 @@
 
 .formbox {
     max-width: 500px;
-    margin: 20px auto;
+    margin: 20px auto 0;
 }
 
 .input {
@@ -87,7 +95,7 @@ textarea.input {
 
 .button {
     padding: 10px 20px;
-    background: #f39c12;
+    background: var(--hightone-color);
     color: #080c10;
     font-family: 'Saira Semi Condensed', sans-serif;
     border: 0;
@@ -97,11 +105,15 @@ textarea.input {
     margin-bottom: 40px;
 }
 
+.button:disabled  {
+    opacity: 0.4;
+    background-color: #cccccc;
+}
+
 .cabezal {
     text-align: center;
     font-family: 'Saira Semi Condensed', sans-serif;
 }
-
 
 .message {
     position: fixed;
@@ -116,11 +128,22 @@ textarea.input {
     color: white;
 }
 
-
 .presgigeOptions{    
     position: absolute;
     bottom: 10px;
     width: 100%;
     display: flex;
     justify-content: space-around;
+    cursor: pointer;
+    color: #cccccc;
+}
+.presgigeOptions span{
+    opacity: 0.6;
+}
+
+
+.presgigeOptions .tipoSelected{
+    color: var(--hightone-color);
+    text-shadow: var(--text-shadow);
+    opacity: 1;
 }
